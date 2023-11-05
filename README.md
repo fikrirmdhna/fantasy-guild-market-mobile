@@ -187,4 +187,4 @@ Membuat instance InventoryItem baru di final List item menu.dart:
 | Tampilan bersifat fixed | Tampilan bersifat dinamis |
 
 ## Widget yang digunakan dalam tugas ini
-Dalam tugas ini, widget yang digunakan adalah implementasi dari abstract class StatelessWidget yang berfungsi untuk menampilkan properti fixed yang diberikan seperti tombol lihat item, daftar item, dan logout. Lalu meng-override class Widget atau parent dari abstract class StatelessWidget untuk menampilkan tampilan yang dinginkan.
+Dalam tugas ini, widget yang digunakan adalah implementasi dari abstract class StatelessWidget yang berfungsi untuk menampilkan properti fixed yang diberikan seperti tombol lihat item, daftar item, dan logout. Lalu meng-override class Widget atau parent dari abstract class StatelessWidget untuk menampilkan tampilan yang diinginkan.
