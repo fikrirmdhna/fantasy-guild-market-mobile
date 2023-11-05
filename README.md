@@ -16,7 +16,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 </details>
-</br>
 
 # Tugas 7
 ## Membuat program Flutter dengan nama fantasy_guild_market_mobile
