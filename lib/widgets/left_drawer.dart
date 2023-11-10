@@ -1,4 +1,5 @@
 import 'package:fantasy_guild_market_mobile/screens/product_form.dart';
+import 'package:fantasy_guild_market_mobile/screens/show_product.dart';
 import 'package:flutter/material.dart';
 import 'package:fantasy_guild_market_mobile/screens/menu.dart';
 
@@ -64,7 +65,18 @@ class LeftDrawer extends StatelessWidget {
                 ));
             },
           ),
-          
+          ListTile(
+            leading: const Icon(Icons.checklist),
+            title: const Text('Show Product'),
+            // Bagian redirection ke MyHomePage
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyProduct(),
+                  ));
+            },
+          ),
         ],
       ),
     );

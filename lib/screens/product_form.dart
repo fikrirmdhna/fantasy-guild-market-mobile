@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 // TODO: Import drawer yang sudah dibuat sebelumnya
 import 'package:fantasy_guild_market_mobile/widgets/left_drawer.dart';
-
+import 'package:fantasy_guild_market_mobile/widgets/item_card.dart';
+import 'package:fantasy_guild_market_mobile/screens/show_product.dart';
 
 class ProductFormPage extends StatefulWidget {
     const ProductFormPage({super.key});
@@ -149,6 +150,7 @@ class _ProductFormState extends State<ProductFormPage> {
                                   );
                                 },
                               );
+                              InventoryProduct.listProduct.add(Item(_name, _price, _description));
                               _formKey.currentState!.reset();
                             }
                           },

@@ -1,3 +1,4 @@
+import 'package:fantasy_guild_market_mobile/screens/show_product.dart';
 import 'package:flutter/material.dart';
 import 'package:fantasy_guild_market_mobile/screens/product_form.dart';
 
@@ -27,8 +28,9 @@ class InventoryCard extends StatelessWidget {
             ..showSnackBar(SnackBar(
                 content: Text("You just clicked the ${item.name} button!")));
                  if (item.name == "Add Product") {
-                  // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const ProductFormPage()));
+                } else if (item.name == "Show Product") { 
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MyProduct()));
                 }
         },
         child: Container(

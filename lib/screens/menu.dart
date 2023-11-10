@@ -24,6 +24,7 @@ class MyHomePage extends StatelessWidget {
         return Scaffold(
             appBar: AppBar(
             backgroundColor : Colors.cyan,
+              foregroundColor: Colors.white,
             title: const Text(
               'Fantasy Guild Market',
               textAlign:TextAlign.left,
