@@ -61,6 +61,9 @@ class ItemCard extends StatelessWidget {
                     children: [
                       Text(
                         item.name,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        softWrap: false,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           color: Colors.white,
@@ -71,12 +74,18 @@ class ItemCard extends StatelessWidget {
                       const Padding(padding: EdgeInsets.all(5)),
                       Text(
                         "Price: ${item.price.toString()} gil",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: false,
                         textAlign: TextAlign.left,
                         style: const TextStyle(color: Colors.white),
                       ),
                       const Padding(padding: EdgeInsets.all(3)),
                       Text(
                         "Power: +${item.power.toString()}",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: false,
                         textAlign: TextAlign.left,
                         style: const TextStyle(color: Colors.white),
                       ),
@@ -92,6 +101,9 @@ class ItemCard extends StatelessWidget {
                       const Padding(padding: EdgeInsets.all(3)),
                       Text(
                         "Amount: ${item.amount.toString()}",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: false,
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 12),
                       ),
