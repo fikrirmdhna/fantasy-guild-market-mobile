@@ -43,7 +43,7 @@ class _MyProductState extends State<MyProduct> {
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 15,
                   crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
-                  childAspectRatio: (1/0.6),
+                  childAspectRatio: (1/0.7),
                   shrinkWrap: true,
                   children: InventoryProduct.listProduct.map((Item item) {
                   // Iterasi untuk setiap item

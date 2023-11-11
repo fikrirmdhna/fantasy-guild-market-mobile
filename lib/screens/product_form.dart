@@ -14,7 +14,9 @@ class ProductFormPage extends StatefulWidget {
 class _ProductFormState extends State<ProductFormPage> {
   final _formKey = GlobalKey<FormState>();
   String _name = "";
+  int _amount = 0;
   int _price = 0;
+  int _power = 0;
   String _description = "";
 
     @override
@@ -64,6 +66,33 @@ class _ProductFormState extends State<ProductFormPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         decoration: InputDecoration(
+                          hintText: "Amount",
+                          labelText: "Amount",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                        // TODO: Tambahkan variabel yang sesuai
+                        onChanged: (String? value) {
+                          setState(() {
+                            _amount= int.parse(value!);
+                          });
+                        },
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return "Fill out the amount!";
+                          }
+                          if (int.tryParse(value) == null) {
+                            return "Amount must be an numbers!";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
                           hintText: "Price",
                           labelText: "Price",
                           border: OutlineInputBorder(
@@ -82,6 +111,33 @@ class _ProductFormState extends State<ProductFormPage> {
                           }
                           if (int.tryParse(value) == null) {
                             return "Price must be an numbers!";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Power",
+                          labelText: "Power",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                        // TODO: Tambahkan variabel yang sesuai
+                        onChanged: (String? value) {
+                          setState(() {
+                            _power= int.parse(value!);
+                          });
+                        },
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return "Fill out the power!";
+                          }
+                          if (int.tryParse(value) == null) {
+                            return "Power must be an numbers!";
                           }
                           return null;
                         },
@@ -134,7 +190,9 @@ class _ProductFormState extends State<ProductFormPage> {
                                         children: [
                                           Text('Name: $_name'),
                                           // TODO: Munculkan value-value lainnya
+                                          Text('Amount: $_amount'),
                                           Text('Price: $_price'),
+                                          Text('Power: $_power'),
                                           Text('Description: $_description'),
                                         ],
                                       ),
@@ -150,7 +208,7 @@ class _ProductFormState extends State<ProductFormPage> {
                                   );
                                 },
                               );
-                              InventoryProduct.listProduct.add(Item(_name, _price, _description));
+                              InventoryProduct.listProduct.add(Item(_name, _amount, _price, _power, _description));
                               _formKey.currentState!.reset();
                             }
                           },

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class Item{
   String name, description;
-  int price;
+  int amount, price, power;
 
-  Item(this.name, this.price, this.description);
+  Item(this.name, this.amount, this.price, this.power, this.description);
 }
 
 class ItemCard extends StatelessWidget {
@@ -32,7 +32,9 @@ class ItemCard extends StatelessWidget {
                       children: [
                         Text('Name: ${item.name}'),
                         // TODO: Munculkan value-value lainnya
+                        Text('Amount: ${item.amount.toString()}'),
                         Text('Price: ${item.price.toString()}'),
+                        Text('Power: ${item.power.toString()}'),
                         Text('Description: ${item.description}'),
                       ],
                     ),
@@ -53,8 +55,8 @@ class ItemCard extends StatelessWidget {
           // Container untuk menyimpan Icon dan Text
               margin: const EdgeInsets.all(8),
               padding: const EdgeInsets.all(10),
-              child: Center(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
@@ -66,10 +68,16 @@ class ItemCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      const Padding(padding: EdgeInsets.all(5)),
+                      Text(
+                        "Price: ${item.price.toString()} gil",
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(color: Colors.white),
+                      ),
                       const Padding(padding: EdgeInsets.all(3)),
                       Text(
-                        "Price: ${item.price.toString()}",
-                        textAlign: TextAlign.center,
+                        "Power: +${item.power.toString()}",
+                        textAlign: TextAlign.left,
                         style: const TextStyle(color: Colors.white),
                       ),
                       const Padding(padding: EdgeInsets.all(3)),
@@ -81,9 +89,14 @@ class ItemCard extends StatelessWidget {
                         textAlign: TextAlign.justify,
                         style: const TextStyle(color: Colors.white),
                       ),
+                      const Padding(padding: EdgeInsets.all(3)),
+                      Text(
+                        "Amount: ${item.amount.toString()}",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 12),
+                      ),
                     ],
                 ),
-            ),
           ),
       ),
     );
