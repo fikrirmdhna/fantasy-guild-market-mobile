@@ -1,3 +1,4 @@
+import 'package:fantasy_guild_market_mobile/screens/detail_product.dart';
 import 'package:flutter/material.dart';
 import 'package:fantasy_guild_market_mobile/models/product.dart';
 import 'package:fantasy_guild_market_mobile/widgets/left_drawer.dart';
@@ -65,7 +66,16 @@ Widget build(BuildContext context) {
                     } else {
                       return ListView.builder(
                           itemCount: snapshot.data!.length,
-                          itemBuilder: (_, index) => Container(
+                          itemBuilder: (_, index) =>InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductDetailsPage(item: snapshot.data![index]),
+                                    ),
+                                  );
+                                },
+                                child: Container(
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 12),
                                   padding: const EdgeInsets.all(20.0),
@@ -81,18 +91,15 @@ Widget build(BuildContext context) {
                                       ),
                                       ),
                                       const SizedBox(height: 10),
-                                      Text("${snapshot.data![index].fields.amount}"),
-                                      const SizedBox(height: 10),
-                                      Text("${snapshot.data![index].fields.price}"),
-                                      const SizedBox(height: 10),
-                                      Text("${snapshot.data![index].fields.power}"),
+                                      Text("Amount: ${snapshot.data![index].fields.amount}"),
                                       const SizedBox(height: 10),
                                       Text(
-                                          "${snapshot.data![index].fields.description}")
+                                          "Description: ${snapshot.data![index].fields.description}")
                                   ],
                                   ),
                               )
-                        );
+                            ),
+                         );
                       }
                     }
                 }

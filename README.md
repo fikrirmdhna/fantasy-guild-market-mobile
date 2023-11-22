@@ -16,7 +16,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 </details>
-</br>
 
 # Tugas 7
 
@@ -194,9 +193,12 @@ Membuat instance InventoryItem baru di final List item menu.dart:
 ## Widget yang digunakan dalam tugas ini
 Dalam tugas ini, widget yang digunakan adalah implementasi dari abstract class StatelessWidget yang berfungsi untuk menampilkan properti fixed yang diberikan seperti tombol lihat item, daftar item, dan logout. Lalu meng-override class Widget atau parent dari abstract class StatelessWidget untuk menampilkan tampilan yang diinginkan.
 </details>
-</br>
 
 # Tugas 8
+
+<details>
+<summary>Read More</summary>
+
 ## Membuat minimal satu halaman formulir untuk menambah item
 1. * Membuat file screens baru bernama product_form.dart untuk menampilkan form yang berisi:
         ```dart
@@ -476,3 +478,157 @@ Kelima elemen input form di atas saya gunakan untuk mendapatkan detail dari item
 Pada flutter penerapan clean architecture dapat dilakukan dengan mengorganisir aplikasi menjadi tiga layer utama, yaitu domain layer, data layer, dan presentation layer. Penerapan ini dilakukan agar aplikasi lebih terstruktur dan mudah untuk dimodifikasi atau diuji untuk kedepannya.
 
 Di dalam tugas ini, seperti di dalam folder lib terdapat folder screens, widgets, dan file main.dart. Di dalam folder screens berisi kumpulan tampilan dari aplikasi, sedangkan widgets berisi container - container yang berupa widget yang akan digunakan di setiap tampilan aplikasi dari screens dan main.dart adalah inti dari aplikasi untuk menjalankan isi dari kedua folder screens dan widgets. 
+</details>
+
+# Tugas 9
+## Membuat halaman login di Flutter
+Membuat file login.dart di dalam folder screens, yang berisi, seperti [ini](lib/screens/login.dart)
+
+## Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter
+1. Jalan kan perintah `python3 manage.py startapp authentication` untuk membuat app baru dari proyek Django yang lalu dan menambahkannya ke dalam routing dan INSTALLED_APPS di settings.py folder proyek.
+
+2. Install dependencies `pip install django-cors-headers` di dalam proyek Django dan tambahkan `corsheaders` ke INSTALLED_APPS dan `corsheaders.middleware.CorsMiddleware` pada settings.py folder proyek. 
+
+3. Lalu tambahkan kode berikut di bagian bawah file settings.py dalam folder proyek:
+    ```python
+    CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ALLOW_CREDENTIALS = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SAMESITE = 'None'
+    SESSION_COOKIE_SAMESITE = 'None'
+    ```
+4. Di dalam authentication/views.py isi kode dengan:
+    ```python
+    import json
+    from django.shortcuts import render
+    from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+    from django.contrib.auth.models import User
+    from django.http import JsonResponse
+    from django.views.decorators.csrf import csrf_exempt
+
+    @csrf_exempt
+    def register(request):
+        if request.method == "POST":
+            input = json.loads(request.body)
+            username = input['username']
+            password = input['password']
+
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({"status": False, "message": "Username is already found!"}, status=400)
+            
+            user = User.objects.create_user(username = username, password = password)
+            user.save()
+            
+            return JsonResponse({
+                "status": True,
+                "message": "Success!"
+            }, status=200)
+        
+    @csrf_exempt
+    def login(request):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                auth_login(request, user)
+                # Status login sukses.
+                return JsonResponse({
+                    "username": user.username,
+                    "status": True,
+                    "message": "Login sukses!"
+                    # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
+                }, status=200)
+            else:
+                return JsonResponse({
+                    "status": False,
+                    "message": "Login gagal, akun dinonaktifkan."
+                }, status=401)
+
+        else:
+            return JsonResponse({
+                "status": False,
+                "message": "Login gagal, periksa kembali email atau kata sandi."
+            }, status=401)
+
+    @csrf_exempt
+    def logout(request):
+        username = request.user.username
+
+        try:
+            auth_logout(request)
+            return JsonResponse({
+                "username": username,
+                "status": True,
+                "message": "Logout berhasil!"
+            }, status=200)
+        except:
+            return JsonResponse({
+            "status": False,
+            "message": "Logout gagal."
+            }, status=401)
+    ```
+
+5. Dalam proyek Flutter jalankan perintah `flutter pub add provider` dan `flutter pub add pbp_django_auth`.
+
+6. Ubah main.dart menjadi seperti [ini](lib/main.dart).
+
+7. install dependensi `flutter pub add http` dan tambahkan kode `<uses-permission android:name="android.permission.INTERNET" />` pada `android/app/src/main/AndroidManifest.xml` untuk memberikan akses internet.
+
+## Membuat model kustom sesuai dengan proyek aplikasi Django
+1. Membuka `localhost:8000/json` proyek Django dan copy paste semua isi ke web (Quicktype)[https://app.quicktype.io]. Ubah nama class sesuai dengan yang diperlukan dan ubah ke dalam bahasa dart lalu copy code tersebut.
+
+2. Dalam proyek Flutter tambahkan folder models di dalam folder lib, lalu buat file product.card dan paste code yang sudah di copy sebelumnya.
+
+## Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON
+Membuat file list_product.dart di dalam folder screens dan hanya menampilkan name, amount, dan description dari product yang ada, seperti [ini](lib/screens/list_product.dart).
+
+## Membuat halaman detail dari setiap product di dalam list_product.dart
+1. Membuat file detail_product.dart di dalam folder screens.
+
+2. Membuat StatelessWidget untuk menampilkan detail setiap data Product setelah di fetch dan diiterate, seperti [ini](lib/screens/detail_product.dart).
+
+## Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? 
+Ya bisa, kita bisa melakukan pengambilan data JSON tanpa membuat model terlebih dahulu. Metode ini disebut sebagai dynamic JSON parsing. Dalam hal ini, data JSON diurai langsung ke dalam struktur data yang sesuai di dalam bahasa pemrograman kita tanpa harus membuat model terlebih dahulu. Ini sering digunakan ketika struktur data tidak diketahui sebelumnya atau ketika kita ingin fleksibilitas dalam menangani berbagai format JSON.
+
+## Fungsi dari CookieRequest 
+CookieRequest dapat digunakan untuk mengirim permintaan HTTP yang menyertakan cookie. Saat autentikasi dikelola atau sesi di aplikasi Flutter, membagikan instance CookieRequest ke semua komponen memastikan bahwa informasi cookie terjaga dan dapat digunakan secara konsisten di seluruh aplikasi. Ini penting dalam aplikasi yang melibatkan autentikasi, di mana keberlanjutan sesi seringkali memerlukan konsistensi dalam penggunaan cookie.
+
+## Mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter
+1. Melakukan fetch data secara async dengan dependensi yang sudah diinstall sebelumnya, seperti:
+    ```dart
+    Future<List<Products>> fetchProduct(request) async {
+        // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+        // melakukan decode response menjadi bentuk json
+        var data = await request.get('http://127.0.0.1:8000/get-product/');  
+        // melakukan konversi data json menjadi object Products
+        List<Products> listProduct = [];
+        for (var d in data) {
+            if (d != null) {
+            listProduct.add(Products.fromJson(d));
+            }
+        }
+        return listProduct;
+    }
+    ```
+
+2. Dan menampilkan data menggunakan widget FutureBuilder.
+
+## Mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter
+1. User mengisi data akun, yaitu `username` dan `password`, di halaman `LoginPage`.
+2. Setelah menekan tombol login, fungsi `login` pada objek `CookieRequest` dipanggil, yang kemudian mengirimkan permintaan HTTP ke URL endpoint proyek Django.
+3. Pada Django, proses autentikasi dilakukan, seperti contoh penggunaan kode `user = authenticate(username=username, password=password)` dalam `views.py` yang terkait dengan autentikasi.
+4. Setelahnya, dilakukan pengecekan apakah `user` tidak sama dengan `None` dan apakah `user` aktif (`user.is_active`).
+5. Kembali ke aplikasi Flutter, jika kondisi `request.loggedIn` terpenuhi, pengguna akan diarahkan ke halaman `MyHomePage`.
+
+## Fungsi dari widget - widget yang digunakan dalam tugas ini
+| Widget | Fungsi |
+| :-------------: | :-------------: |
+| **FutureBuilder** | widget untuk menggunakan async function |
+| **ListView.builder** | widget untuk menampilkan data sebagai list dengan fitur scroll |
+| **TextField** | widget untuk tempat menginput suatu teks |
+| **Column** | widget untuk menyusun isinya secara vertikal |
+| **Navigator** | widget untuk menavigasi antar screen |
+| **Scaffold** | widget yang mendasari struktur dasar aplikasi |
+| **SizedBox** | widget untuk memberikan batasan ukuran widget di dalamnya |
