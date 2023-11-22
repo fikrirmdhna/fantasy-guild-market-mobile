@@ -5,6 +5,7 @@ class Item{
   int amount, price, power;
 
   Item(this.name, this.amount, this.price, this.power, this.description);
+
 }
 
 class ItemCard extends StatelessWidget {

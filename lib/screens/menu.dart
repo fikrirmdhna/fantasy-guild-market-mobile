@@ -7,6 +7,7 @@ class MyHomePage extends StatelessWidget {
 
   final List<InventoryItem> items = [
       InventoryItem("Show Product", Icons.checklist, Colors.green),
+      InventoryItem("Show Product JSON", Icons.checklist, const Color.fromARGB(255, 72, 148, 210)),
       InventoryItem("Add Product", Icons.add_shopping_cart, Colors.blueGrey),
       InventoryItem("Logout", Icons.logout, Colors.deepPurple),
   ];
@@ -58,7 +59,7 @@ class MyHomePage extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    crossAxisCount: 3,
+                    crossAxisCount: 2,
                     shrinkWrap: true,
                     children: items.map((InventoryItem item) {
                       // Iterasi untuk setiap item
