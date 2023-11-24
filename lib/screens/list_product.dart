@@ -18,7 +18,7 @@ class _ProductPageState extends State<ProductPage> {
 Future<List<Products>> fetchProduct(request) async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     // melakukan decode response menjadi bentuk json
-    var data = await request.get('http://127.0.0.1:8000/get-product/');  
+    var data = await request.get('https://fikri-dhiya21-tugas.pbp.cs.ui.ac.id/get-product/');  
     // melakukan konversi data json menjadi object Products
     List<Products> listProduct = [];
     for (var d in data) {
